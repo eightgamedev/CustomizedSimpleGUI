@@ -118,6 +118,8 @@ namespace CustomizedSimpleGUI
 
 	void Pulldown::update()
 	{
+		oldState = m_state.selectedItemIndex;
+
 		// クリックしたとき
 		if (m_displayRegion.leftClicked())
 		{
@@ -351,6 +353,11 @@ namespace CustomizedSimpleGUI
 					.draw(m_state.scrollBarGrabbed ? ColorF{ 0.33 } : ColorF{ 0.67 });
 			}
 		}
+	}
+
+	bool Pulldown::isChanged() const
+	{
+		return (oldState && oldState != m_state.selectedItemIndex);
 	}
 
 	RectF Pulldown::getDisplayRegion() const

@@ -20,6 +20,7 @@ namespace CustomizedSimpleGUI
 		void draw() const;
 		RectF getDisplayRegion() const;
 		static void closeCurrentOpeningListBox();
+		bool isChanged() const;
 	private:
 		static Pulldown* currentOpeningListBox;
 		Font m_font;
