@@ -6,6 +6,7 @@ namespace CustomizedSimpleGUI
 	class Pulldown
 	{
 	public:
+		Pulldown(const Font font, const Vec2& displayPos, const double width, const int32 listCount);
 		Pulldown(ListBoxState state, const Font font, const Vec2& displayPos, const double width, const int32 listCount);
 		mutable ListBoxState m_state;
 		void emplace_back(String item);
@@ -31,7 +32,7 @@ namespace CustomizedSimpleGUI
 		int32 m_maxLines;
 		int32 m_lines;
 		RectF m_listRegion;
-		Optional<size_t> oldState = m_state.selectedItemIndex;
+		Optional<size_t> oldState;
 		bool hasScrollBar;
 		Vec2 m_listPos;
 		int32 itemWidth;

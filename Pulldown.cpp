@@ -15,44 +15,66 @@ void Pulldown::closeCurrentOpeningListBox()
 	}
 }
 
-Pulldown::Pulldown(ListBoxState state, const Font font, const Vec2& displayPos, const double width, const int32 listCount)
-	: m_state(state)
+// これを使う場合はシーンのコンストラクタで必ずPulldown::setItems()を実行すること
+Pulldown::Pulldown(const Font font, const Vec2& displayPos, const double width, const int32 listCount)
+	: m_font(font)
 	, m_displayPos(displayPos)
-	, m_font(font)
 	, m_listCount(listCount)
 {
-
 	m_isOpen = false;
 	m_state.selectedItemIndex = 0;
-
 	m_fontHeight = m_font.height();
 	m_displayRegion = { m_displayPos, Max(width, 40.0), font.height() + (ListBoxFrameThickness * 2) };
-
 	double height = (m_fontHeight + (ListBoxFrameThickness * 2)) * m_listCount;
-	
 	m_maxLines = (static_cast<int32>(height) - (ListBoxFrameThickness * 2)) / m_fontHeight;
 	m_lines = Min<int32>(m_maxLines, static_cast<int32>(m_state.items.size()));
 	hasScrollBar = (m_maxLines < static_cast<int32>(m_state.items.size()));
-
+	Optional<size_t> oldState = m_state.selectedItemIndex;
 	m_listRegion = {
 		m_displayRegion.pos.movedBy(0, m_displayRegion.h),
 		width,
 		Max<double>(height, font.height() + (ListBoxFrameThickness * 2))
 	};
-
 	m_listPos = m_listRegion.pos.movedBy(ListBoxFrameThickness, ListBoxFrameThickness);
+	itemWidth = static_cast<int32>(width - (ListBoxFrameThickness * 2) - (hasScrollBar ? ScrollBarWidth : 0));
+}
 
-	itemWidth = static_cast<int32>(m_listRegion.w - (ListBoxFrameThickness * 2) - (hasScrollBar ? ScrollBarWidth : 0));
+Pulldown::Pulldown(ListBoxState state, const Font font, const Vec2& displayPos, const double width, const int32 listCount)
+	: m_state(state)
+	, m_font(font)
+	, m_displayPos(displayPos)
+	, m_listCount(listCount)
+{
+	m_isOpen = false;
+	m_state.selectedItemIndex = 0;
+	m_fontHeight = m_font.height();
+	m_displayRegion = { m_displayPos, Max(width, 40.0), font.height() + (ListBoxFrameThickness * 2) };
+	double height = (m_fontHeight + (ListBoxFrameThickness * 2)) * m_listCount;
+	m_maxLines = (static_cast<int32>(height) - (ListBoxFrameThickness * 2)) / m_fontHeight;
+	m_lines = Min<int32>(m_maxLines, static_cast<int32>(m_state.items.size()));
+	hasScrollBar = (m_maxLines < static_cast<int32>(m_state.items.size()));
+	Optional<size_t> oldState = m_state.selectedItemIndex;
+	m_listRegion = {
+		m_displayRegion.pos.movedBy(0, m_displayRegion.h),
+		width,
+		Max<double>(height, font.height() + (ListBoxFrameThickness * 2))
+	};
+	m_listPos = m_listRegion.pos.movedBy(ListBoxFrameThickness, ListBoxFrameThickness);
+	itemWidth = static_cast<int32>(width - (ListBoxFrameThickness * 2) - (hasScrollBar ? ScrollBarWidth : 0));
 }
 
 void Pulldown::emplace_back(String item)
 {
 	m_state.items.emplace_back(item);
+	m_lines = Min<int32>(m_maxLines, static_cast<int32>(m_state.items.size()));
+	hasScrollBar = (m_maxLines < static_cast<int32>(m_state.items.size()));
 }
 
 void Pulldown::setItems(const Array<String>& items)
 {
 	m_state.items = items;
+	m_lines = Min<int32>(m_maxLines, static_cast<int32>(m_state.items.size()));
+	hasScrollBar = (m_maxLines < static_cast<int32>(m_state.items.size()));
 }
 
 void Pulldown::setIndex(const size_t index)
@@ -117,19 +139,7 @@ void Pulldown::update()
 
 	if (not m_isOpen) return;
 
-	currentOpeningListBox = this;
-	//const double RectWidth = (m_displayCount < m_state.items.size()) ? (m_displayRegion.size.x - ScrollBarWidth) : m_displayRegion.size.x;
-	//for (size_t i = 0; i < m_displayCount; ++i)
-	//{
-	//	Vec2 pos = m_displayRegion.pos.movedBy(0, (SimpleGUI::GetFont().height()) * i + m_displayRegion.h);
-	//	if (const RectF rect{ pos, { RectWidth, SimpleGUI::GetFont().height() } }; rect.leftClicked())
-	//	{
-	//		currentOpeningListBox = nullptr;
-	//	}
-	//}
-
-	// update
-	// update
+	// リストボックスの更新
 	{
 
 			for (int32 i = 0; i < m_lines; ++i)
@@ -252,9 +262,7 @@ void Pulldown::draw() const
 
 	if (not m_isOpen) return;
 
-	// SimpleGUI::ListBox(m_state, { m_displayRegion.pos.movedBy(0, m_displayRegion.h) }, m_displayRegion.w, (SimpleGUI::GetFont().height() + FrameThickness) * m_displayCount);
-
-	// draw
+	// リストボックスの描画
 	{
 		constexpr int32 PaddingLeft = 8;
 		constexpr int32 PaddingRight = 8;
@@ -273,7 +281,10 @@ void Pulldown::draw() const
 			const RectF itemRect(m_listPos.x + ListBoxFrameThickness, m_listPos.y + ListBoxFrameThickness + (m_fontHeight * i), itemWidth, m_fontHeight);
 			const RectF textRect(itemRect.pos.movedBy(PaddingLeft, 0), textMaxWidth, itemRect.h);
 			const String& text = m_state.items[itemIndex];
-
+			if (itemRect.mouseOver())
+			{
+				itemRect.draw(ColorF{ 0.85 });
+			}
 			if (selected)
 			{
 				const ColorF selectedItemBackgroundColor = ListBoxSelectedColor;
@@ -342,21 +353,6 @@ void Pulldown::draw() const
 				.draw(m_state.scrollBarGrabbed ? ColorF{ 0.33 } : ColorF{ 0.67 });
 		}
 	}
-
-
-	//const double RectWidth = (m_displayCount < m_state.items.size()) ? (m_displayRegion.size.x - ScrollBarWidth) : m_displayRegion.size.x;
-	//for (size_t i = 0; i < m_displayCount; ++i)
-	//{
-	//	Vec2 pos = m_displayRegion.pos.movedBy(0, (SimpleGUI::GetFont().height()) * i + m_displayRegion.h);
-	//	if (const RectF rect{ pos, { RectWidth, SimpleGUI::GetFont().height() } }; rect.mouseOver())
-	//	{
-	//		rect.draw(Color{ 135, 206, 235, 128 });
-	//		if (rect.leftClicked())
-	//		{
-	//			m_isOpen = false;
-	//		}
-	//	}
-	//}
 }
 
 RectF Pulldown::getDisplayRegion() const
