@@ -2,7 +2,6 @@
 
 # include "Common.hpp"
 # include "TestScene.hpp"
-# include "CustomizedSimpleGUI.hpp"
 
 void Main()
 {

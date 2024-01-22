@@ -141,6 +141,8 @@ void Pulldown::update()
 				{
 					m_state.active = true;
 					m_state.selectedItemIndex = itemIndex;
+					currentOpeningListBox = nullptr;
+					m_isOpen = false;
 				}
 			}
 
