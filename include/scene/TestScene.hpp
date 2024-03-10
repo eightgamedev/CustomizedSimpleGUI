@@ -1,6 +1,8 @@
-﻿#pragma once
-# include "Button.hpp"
-# include "Pulldown.hpp"
+﻿# pragma once
+# include "scene/Common.hpp"
+# include "scene/TestScene.hpp"
+# include "CustomizedSimpleGUI/Button.hpp"
+# include "CustomizedSimpleGUI/Pulldown.hpp"
 
 class TestScene : public App::Scene
 {

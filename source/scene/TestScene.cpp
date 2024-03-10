@@ -1,7 +1,4 @@
-﻿# include "Common.hpp"
-# include "TestScene.hpp"
-# include "Button.hpp"
-# include "Pulldown.hpp"
+﻿# include "scene/TestScene.hpp"
 
 TestScene::TestScene(const InitData& init)
 	: IScene(init)

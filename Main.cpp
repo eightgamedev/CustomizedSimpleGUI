@@ -1,7 +1,7 @@
 ﻿# include <Siv3D.hpp> // Siv3D v0.6.13
 
-# include "Common.hpp"
-# include "TestScene.hpp"
+# include "scene/Common.hpp"
+# include "scene/TestScene.hpp"
 
 void Main()
 {

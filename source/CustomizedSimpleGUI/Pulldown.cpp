@@ -1,5 +1,4 @@
-﻿# include "Pulldown.hpp"
-# include "GUIVariables.hpp"
+﻿# include "CustomizedSimpleGUI/Pulldown.hpp"
 
 namespace CustomizedSimpleGUI
 {
@@ -68,6 +67,7 @@ namespace CustomizedSimpleGUI
 		m_state.items.emplace_back(item);
 		m_lines = Min<int32>(m_maxLines, static_cast<int32>(m_state.items.size()));
 		hasScrollBar = (m_maxLines < static_cast<int32>(m_state.items.size()));
+		itemWidth = static_cast<int32>(m_listRegion.w - (ListBoxFrameThickness * 2) - (hasScrollBar ? ScrollBarWidth : 0));
 	}
 
 	void Pulldown::setItems(const Array<String>& items)
@@ -75,6 +75,7 @@ namespace CustomizedSimpleGUI
 		m_state.items = items;
 		m_lines = Min<int32>(m_maxLines, static_cast<int32>(m_state.items.size()));
 		hasScrollBar = (m_maxLines < static_cast<int32>(m_state.items.size()));
+		itemWidth = static_cast<int32>(m_listRegion.w - (ListBoxFrameThickness * 2) - (hasScrollBar ? ScrollBarWidth : 0));
 	}
 
 	void Pulldown::setIndex(const size_t index)

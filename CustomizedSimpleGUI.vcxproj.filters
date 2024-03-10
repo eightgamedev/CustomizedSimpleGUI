@@ -136,21 +136,33 @@
     <Filter Include="Resource Files\engine\font\min">
       <UniqueIdentifier>{1b103960-f11a-4515-b4f1-f59333ce00d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\scene">
+      <UniqueIdentifier>{9f7b9ecb-89dc-406d-aca3-9b893267040b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CustomizedSimpleGUI">
+      <UniqueIdentifier>{f4bf1bb9-9761-4fd3-b61d-f158c0950e0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CustomizedSimpleGUI">
+      <UniqueIdentifier>{13f84deb-2902-4ca3-be16-e472a6db334d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scene">
+      <UniqueIdentifier>{a6d2937a-36c0-403f-887f-5aafa33c4fb1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestScene.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="source\CustomizedSimpleGUI\Button.cpp">
+      <Filter>Source Files\CustomizedSimpleGUI</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="source\CustomizedSimpleGUI\Pulldown.cpp">
+      <Filter>Source Files\CustomizedSimpleGUI</Filter>
     </ClCompile>
-    <ClCompile Include="Pulldown.cpp">
+    <ClCompile Include="source\scene\TestScene.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -786,20 +798,20 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TestScene.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\CustomizedSimpleGUI\Button.hpp">
+      <Filter>Header Files\CustomizedSimpleGUI</Filter>
     </ClInclude>
-    <ClInclude Include="Common.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\CustomizedSimpleGUI\GUIVariables.hpp">
+      <Filter>Header Files\CustomizedSimpleGUI</Filter>
     </ClInclude>
-    <ClInclude Include="Button.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\CustomizedSimpleGUI\Pulldown.hpp">
+      <Filter>Header Files\CustomizedSimpleGUI</Filter>
     </ClInclude>
-    <ClInclude Include="Pulldown.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\scene\Common.hpp">
+      <Filter>Header Files\scene</Filter>
     </ClInclude>
-    <ClInclude Include="GUIVariables.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\scene\TestScene.hpp">
+      <Filter>Header Files\scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

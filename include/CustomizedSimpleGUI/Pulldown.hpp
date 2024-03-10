@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿# pragma once
+# include "CustomizedSimpleGUI/GUIVariables.hpp"
 
 namespace CustomizedSimpleGUI
 {

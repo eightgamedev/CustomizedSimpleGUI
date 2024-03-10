@@ -1,5 +1,4 @@
-﻿#include "Button.hpp"
-# include "GUIVariables.hpp"
+﻿# include "CustomizedSimpleGUI/Button.hpp"
 
 namespace CustomizedSimpleGUI
 {
